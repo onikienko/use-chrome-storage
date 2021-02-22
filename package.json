@@ -1,6 +1,6 @@
 {
   "name": "use-chrome-storage",
-  "version": "0.0.0",
+  "version": "1.0.0-0",
   "description": "React hooks for chrome.storage. You may use it for keeping global state in chrome extensions.",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -10,8 +10,8 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "release": "npm run build && np --no-yarn",
-    "preview": "npm run build && np --no-yarn --preview",
+    "release": "npm run build && np --no-yarn --no-2fa",
+    "preview": "npm run build && np --no-yarn --preview --no-2fa",
     "test": "jest"
   },
   "repository": {
