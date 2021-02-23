@@ -119,6 +119,8 @@ Or from content script:
 ```javascript
 // contentScript.js
 import React from 'react';
+import Avatar from './common/Avatar';
+import History from './common/History';
 import {useSettingsStore} from './common/useSettingsStore';
 
 
@@ -134,7 +136,7 @@ const Card = () => {
 };
 ```
 
-In same way you may use it for PopUp or background scripts.
+In the same way you may use it for PopUp or background scripts.
 
 ## API
 
