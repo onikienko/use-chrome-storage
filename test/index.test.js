@@ -1,7 +1,12 @@
 import {waitFor} from '@testing-library/react';
 import {act, renderHook} from '@testing-library/react-hooks';
 import {chrome} from 'jest-chrome';
-import {useChromeStorageLocal, useChromeStorageSync} from '../src';
+import {
+    createChromeStorageStateHookLocal,
+    createChromeStorageStateHookSync,
+    useChromeStorageLocal,
+    useChromeStorageSync,
+} from '../src';
 
 
 const KEY = 'settings';
@@ -118,6 +123,29 @@ describe.each`
         expect(mSet.mock.calls[0][0]).toEqual({[KEY]: UPDATED});
         await waitFor(() => {
             expect(store[KEY]).toEqual(UPDATED);
+        });
+    });
+});
+
+
+describe.each`
+    createHook
+    ${createChromeStorageStateHookLocal}
+    ${createChromeStorageStateHookSync}
+`('$createHook', ({createHook}) => {
+    it('one hook update the other', async function () {
+        const useSettings = createHook(KEY, INITIAL);
+        const {result: resultA} = renderHook(() => useSettings());
+        const {result: resultB} = renderHook(() => useSettings());
+
+        act(() => {
+            const setSettings = resultA.current[1];
+            setSettings(UPDATED);
+        });
+
+        const [settings] = resultB.current;
+        await waitFor(() => {
+            expect(settings).toEqual(UPDATED);
         });
     });
 });
