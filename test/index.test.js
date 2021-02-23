@@ -19,8 +19,8 @@ const mockSetSync = chrome.storage.sync.set;
 
 const mockGet = (objToGet, callback) => {
     const key = Object.keys(objToGet)[0];
-    const value = Object.values(objToGet)[0];
-    const res = store[key] === undefined ? {[key]: value} : {[key]: store[key]};
+    const defaultValue = Object.values(objToGet)[0];
+    const res = store[key] === undefined ? {[key]: defaultValue} : {[key]: store[key]};
     callback(res);
 };
 const mockSet = (objToSet, callback) => {
@@ -76,31 +76,22 @@ describe.each`
         });
     });
 
-    it('update state and storage', async function () {
+    it('update state with no errors', async function () {
         const {result} = renderHook(() => hook(KEY, INITIAL));
-
         act(() => {
             const setSettings = result.current[1];
             setSettings(UPDATED);
         });
         const [settings, , isPersistent, error] = result.current;
-        expect(settings).toEqual(UPDATED);
-        expect(isPersistent).toBeTruthy();
-        expect(error).toBe('');
-
-        expect(mGet).toHaveBeenCalled();
-        expect(mGet.mock.calls[0][0]).toEqual({[KEY]: INITIAL});
-        expect(mSet).toHaveBeenCalled();
-        expect(mSet.mock.calls[0][0]).toEqual({[KEY]: UPDATED});
-
         await waitFor(() => {
-            expect(store[KEY]).toEqual(UPDATED);
+            expect(settings).toEqual(UPDATED);
+            expect(isPersistent).toBeTruthy();
+            expect(error).toBe('');
         });
     });
 
-    it('update state and storage with callback', async function () {
+    it('update state in callback function with no errors', async function () {
         const {result} = renderHook(() => hook(KEY, INITIAL));
-
         act(() => {
             const setSettings = result.current[1];
             setSettings(prevValue => {
@@ -108,92 +99,25 @@ describe.each`
             });
         });
         const [settings, , isPersistent, error] = result.current;
-        expect(settings).toEqual(UPDATED_PARTIALLY);
-        expect(isPersistent).toBeTruthy();
-        expect(error).toBe('');
+        await waitFor(() => {
+            expect(settings).toEqual(UPDATED_PARTIALLY);
+            expect(isPersistent).toBeTruthy();
+            expect(error).toBe('');
+        });
+    });
 
+    it('update storage when update state', async function () {
+        const {result} = renderHook(() => hook(KEY, INITIAL));
+        act(() => {
+            const setSettings = result.current[1];
+            setSettings(UPDATED);
+        });
         expect(mGet).toHaveBeenCalled();
         expect(mGet.mock.calls[0][0]).toEqual({[KEY]: INITIAL});
         expect(mSet).toHaveBeenCalled();
-        expect(mSet.mock.calls[0][0]).toEqual({[KEY]: UPDATED_PARTIALLY});
-
+        expect(mSet.mock.calls[0][0]).toEqual({[KEY]: UPDATED});
         await waitFor(() => {
-            expect(store[KEY]).toEqual(UPDATED_PARTIALLY);
+            expect(store[KEY]).toEqual(UPDATED);
         });
     });
 });
-
-// describe('useChromeStorageLocal()', () => {
-//     it('set initialValue as state', function () {
-//         const {result} = renderHook(() => useChromeStorageLocal(KEY, INITIAL));
-//         const [settings] = result.current;
-//         expect(settings).toEqual(INITIAL);
-//     });
-//
-//     it('set functional initialValue as state', () => {
-//         const {result} = renderHook(() => useChromeStorageLocal(KEY, () => INITIAL));
-//         const [settings] = result.current;
-//         expect(settings).toEqual(INITIAL);
-//     });
-//
-//     it('be persistent and with no error', function () {
-//         const {result} = renderHook(() => useChromeStorageLocal(KEY, INITIAL));
-//         const [, , isPersistent, error] = result.current;
-//         expect(isPersistent).toBeTruthy();
-//         expect(error).toBe('');
-//     });
-//
-//     it('not update storage with initialValue', async function () {
-//         renderHook(() => useChromeStorageLocal(KEY, () => INITIAL));
-//         expect(mockSetLocal).not.toHaveBeenCalled();
-//         await waitFor(() => {
-//             expect(storeLocal).toEqual({});
-//         });
-//     });
-//
-//     it('update state and storage', async function () {
-//         const {result} = renderHook(() => useChromeStorageLocal(KEY, INITIAL));
-//
-//         act(() => {
-//             const setSettings = result.current[1];
-//             setSettings(UPDATED);
-//         });
-//         const [settings, , isPersistent, error] = result.current;
-//         expect(settings).toEqual(UPDATED);
-//         expect(isPersistent).toBeTruthy();
-//         expect(error).toBe('');
-//
-//         expect(mockGetLocal).toHaveBeenCalled();
-//         expect(mockGetLocal.mock.calls[0][0]).toEqual({[KEY]: INITIAL});
-//         expect(mockSetLocal).toHaveBeenCalled();
-//         expect(mockSetLocal.mock.calls[0][0]).toEqual({[KEY]: UPDATED});
-//
-//         await waitFor(() => {
-//             expect(storeLocal[KEY]).toEqual(UPDATED);
-//         });
-//     });
-//
-//     it('update state and storage with callback', async function () {
-//         const {result} = renderHook(() => useChromeStorageLocal(KEY, INITIAL));
-//
-//         act(() => {
-//             const setSettings = result.current[1];
-//             setSettings(prevValue => {
-//                 return {...prevValue, opt2: true};
-//             });
-//         });
-//         const [settings, , isPersistent, error] = result.current;
-//         expect(settings).toEqual(UPDATED_PARTIALLY);
-//         expect(isPersistent).toBeTruthy();
-//         expect(error).toBe('');
-//
-//         expect(mockGetLocal).toHaveBeenCalled();
-//         expect(mockGetLocal.mock.calls[0][0]).toEqual({[KEY]: INITIAL});
-//         expect(mockSetLocal).toHaveBeenCalled();
-//         expect(mockSetLocal.mock.calls[0][0]).toEqual({[KEY]: UPDATED_PARTIALLY});
-//
-//         await waitFor(() => {
-//             expect(storeLocal[KEY]).toEqual(UPDATED_PARTIALLY);
-//         });
-//     });
-// });
