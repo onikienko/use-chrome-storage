@@ -43,7 +43,7 @@
     "@babel/preset-env": "^7.12.17",
     "@babel/preset-react": "^7.12.13",
     "@testing-library/react": "^11.2.5",
-    "@testing-library/react-hooks": "^5.0.3",
+    "@testing-library/react-hooks": "^6.0.0",
     "@types/chrome": "^0.0.141",
     "babel-jest": "^26.6.3",
     "eslint": "^7.20.0",
