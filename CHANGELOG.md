@@ -1,3 +1,7 @@
+# 1.0.3
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.3
+
 # 1.0.2
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.2
