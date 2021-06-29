@@ -1,6 +1,6 @@
 {
   "name": "use-chrome-storage",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Custom React hooks for `chrome.storage.` You may use it for keeping global persisted state in chrome extensions.",
   "source": "src/index.js",
   "main": "dist/index.js",
