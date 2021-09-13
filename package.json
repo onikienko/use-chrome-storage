@@ -49,7 +49,7 @@
     "eslint": "^7.29.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "jest": "^26.6.3",
+    "jest": "^27.1.1",
     "jest-chrome": "^0.7.1",
     "microbundle": "^0.13.3",
     "np": "^7.5.0",
