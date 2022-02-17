@@ -33,13 +33,14 @@ export default function useChromeStorage(key, initialValue, storageArea) {
 
     const updateValue = useCallback((newValue) => {
         const toStore = typeof newValue === 'function' ? newValue(state) : newValue;
-        setState(toStore);
         storage.set(key, toStore, STORAGE_AREA)
             .then(() => {
                 setIsPersistent(true);
                 setError('');
             })
             .catch(error => {
+                // set newValue to local state because chrome.storage.onChanged won't be fired in error case
+                setState(toStore);
                 setIsPersistent(false);
                 setError(error);
             });
