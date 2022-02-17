@@ -28,18 +28,26 @@ const mockGet = (objToGet, callback) => {
     const res = store[key] === undefined ? {[key]: defaultValue} : {[key]: store[key]};
     callback(res);
 };
-const mockSet = (objToSet, callback) => {
+const mockSet = (objToSet, callback, storageArea) => {
+    const key = Object.keys(objToSet)[0];
+    const changeObj = {
+        [key]: {
+            oldValue: Object.values(store)[0],
+            newValue: Object.values(objToSet)[0],
+        },
+    };
     store = {
         ...store,
         ...objToSet,
     };
+    chrome.storage.onChanged.callListeners(changeObj, storageArea);
     callback();
 };
 
 mockGetLocal.mockImplementation(mockGet);
-mockSetLocal.mockImplementation(mockSet);
+mockSetLocal.mockImplementation((objToSet, callback) => mockSet(objToSet, callback, 'local'));
 mockGetSync.mockImplementation(mockGet);
-mockSetSync.mockImplementation(mockSet);
+mockSetSync.mockImplementation((objToSet, callback) => mockSet(objToSet, callback, 'sync'));
 
 beforeEach(() => {
     store = {};
