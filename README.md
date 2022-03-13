@@ -1,5 +1,7 @@
 # use-chrome-storage
 
+### Russian invaders must die. Glory to Ukraine.
+
 ☝️ This package is for usage in Chrome Extinsions. Should work with Firefox extensions but did not tested.
 
 Custom React hooks for `chrome.storage.` You may use it for keeping global persisted state in chrome extensions.
