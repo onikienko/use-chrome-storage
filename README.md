@@ -6,10 +6,12 @@
 
 Custom React hooks for `chrome.storage.` You may use it for keeping global persisted state in Chrome Extensions.
 
+**Note:** Since it's a React hook, it may be used only in the React context.
+So it's impossible to use this package in the background service worker.
+
 - Simplify work with `chrome.storage`
 - Supports `chrome.storage.local` and `chrome.storage.sync`
-- May be used as persisted state available from all extension's contexts (background, content script, popup, option
-  page)
+- May be used as persisted state available in different extension's contexts (content script, popup, options page)
 - Listen for `chrome.storage` changes and keep local state updated
 
 ## Install
@@ -63,8 +65,8 @@ const LocalCounter = () => {
 
 ### Usage of createChromeStorageStateHook
 
-If you want to use same `key` in different components in different extension contexts (like in PopUp, content scripts,
-background pages) you need to use `createChromeStorageStateHookLocal`(for chrome.storage.**local**)
+If you want to use same `key` in different components in different extension parts in React context (like in PopUp, content scripts,
+) you need to use `createChromeStorageStateHookLocal`(for chrome.storage.**local**)
 or `createChromeStorageStateHookSync` (for chrome.storage.**sync**)
 
 Initialize storage:
@@ -151,7 +153,7 @@ const Card = () => {
 };
 ```
 
-In the same way you may use it for PopUp or background scripts.
+In the same way you may use it for PopUp.
 
 ## API
 
