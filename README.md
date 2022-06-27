@@ -1,10 +1,10 @@
 # use-chrome-storage
 
-### Russian invaders must die. Glory to Ukraine.
+### Russian invaders must die. Glory to Ukraine. Тримайтеся, брати!
 
-☝️ This package is for usage in Chrome Extensions. Should work with Firefox extensions but did not tested.
+☝️ This package is for usage in Chrome Extensions. Should work with Firefox extensions but not tested.
 
-Custom React hooks for `chrome.storage.` You may use it for keeping global persisted state in chrome extensions.
+Custom React hooks for `chrome.storage.` You may use it for keeping global persisted state in Chrome Extensions.
 
 - Simplify work with `chrome.storage`
 - Supports `chrome.storage.local` and `chrome.storage.sync`
@@ -19,6 +19,17 @@ npm i use-chrome-storage
 ```
 
 ## Usage
+
+This package requires the storage permission in manifest.json:
+
+```json
+{
+	"name": "My Extension",
+	"permissions": [
+		"storage"
+	]
+}
+```
 
 For usage with chrome.storage.**local** use `useChromeStorageLocal` hook. For chrome.storage.**sync**
 use `useChromeStorageSync` hook.
