@@ -72,8 +72,6 @@ export function createChromeStorageStateHookLocal<S>(key: string, initialValue: 
  */
 export function createChromeStorageStateHookLocal<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
 
-
-
  
 /**
  * Use to create state with chrome.storage.sync.
