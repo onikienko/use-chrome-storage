@@ -93,4 +93,4 @@ export function createChromeStorageStateHookSync<S>(key: string, initialValue: S
  * @param {*} [initialValue] - default value to use
  * @returns {function(): [any, (value: any) => void, boolean, string]}
  */
- export function createChromeStorageStateHookSync<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
+export function createChromeStorageStateHookSync<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
