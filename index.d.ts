@@ -49,7 +49,7 @@ export function useChromeStorageSync<S>(key: string, initialValue: S | (() => S)
  *      `isPersistent` - will be `false` if error occurred during reading/writing chrome.storage,
  *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
  */
- export function useChromeStorageSync<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
+export function useChromeStorageSync<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
 
 
 /**
@@ -70,7 +70,7 @@ export function createChromeStorageStateHookLocal<S>(key: string, initialValue: 
  * @param {*} [initialValue] - default value to use
  * @returns {function(): [any, (value: any) => void, boolean, string]}
  */
- export function createChromeStorageStateHookLocal<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
+export function createChromeStorageStateHookLocal<S = undefined>(key: string): [S | undefined, (value: S | undefined) => void, boolean, string];
 
 
 
