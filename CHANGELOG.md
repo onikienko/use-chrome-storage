@@ -1,3 +1,10 @@
+# 1.0.9
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.9
+
+- improved typescript typing
+- update dependencies
+
 # 1.0.7
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.7
