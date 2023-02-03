@@ -8,8 +8,8 @@
   "umd:main": "dist/index.umd.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch",
+    "build": "microbundle --generateTypes false",
+    "dev": "microbundle watch --generateTypes false",
     "release": "npm run build && np --no-yarn --no-cleanup",
     "preview": "npm run build && np --no-yarn --no-cleanup --preview",
     "test": "jest"
