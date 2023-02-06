@@ -29,8 +29,8 @@ declare namespace useChromeStorage {
    *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
    */
   function useChromeStorageLocal<S = undefined>(key: string): [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
-  
-  
+
+
   /**
    * Hook which will use `chrome.storage.sync` to persist state.
    *
@@ -56,8 +56,8 @@ declare namespace useChromeStorage {
    *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
    */
   function useChromeStorageSync<S = undefined>(key: string): [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
-  
-  
+
+
   /**
    * Use to create state with chrome.storage.local.
    * Useful if you want to reuse same state across components and/or context (like in popup, content script, background pages)
@@ -77,8 +77,8 @@ declare namespace useChromeStorage {
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
   function createChromeStorageStateHookLocal<S = undefined>(key: string): [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
-  
-    
+
+
   /**
    * Use to create state with chrome.storage.sync.
    * Useful if you want to reuse same state across components and/or context (like in popup, content script, background pages)
@@ -87,7 +87,7 @@ declare namespace useChromeStorage {
    * @param {*} [initialValue] - default value to use
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
-  function createChromeStorageStateHookSync<S>(key: string, initialValue: S | (() => S)): [S, Dispatch<SetStateAction<S>>, boolean, string];
+  function createChromeStorageStateHookSync<S>(key: string, initialValue: S | (() => S)): () => [S, Dispatch<SetStateAction<S>>, boolean, string];
   // convenience overload when initialValue is omitted
   /**
    * Use to create state with chrome.storage.sync.
@@ -97,5 +97,5 @@ declare namespace useChromeStorage {
    * @param {*} [initialValue] - default value to use
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
-  function createChromeStorageStateHookSync<S = undefined>(key: string): [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
+  function createChromeStorageStateHookSync<S = undefined>(key: string): () => [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
 }
