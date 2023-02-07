@@ -2,7 +2,7 @@
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.10
 
-- fix: create hook types (@HidemitsuFcamara)
+- fix: create hook types (@HidemitsuHashimoto)
 - upgrade dependencies
 
 # 1.0.9
