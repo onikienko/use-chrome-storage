@@ -1,3 +1,10 @@
+# 1.0.11
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.11
+
+- fix: hook types (#336) (@Chaysen)
+- upgrade dependencies
+
 # 1.0.10
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.10
