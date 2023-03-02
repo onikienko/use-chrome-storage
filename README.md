@@ -45,7 +45,7 @@ import {useChromeStorageLocal} from 'use-chrome-storage';
 
 const LocalCounter = () => {
     // if you need to state be preserved in `chrome.storage.sync` use useChromeStorageSync
-    const [value, setValue, isPersistent, error] = useChromeStorageLocal('counterLocal', 0);
+    const [value, setValue, isPersistent, error, isInitialStateResolved] = useChromeStorageLocal('counterLocal', 0);
     return (
             <div>
                 <button
@@ -58,6 +58,7 @@ const LocalCounter = () => {
                 <div>Value: {value}</div>
                 <div>Persisted in chrome.storage.local: {isPersistent.toString()}</div>
                 <div>Error: {error}</div>
+                <div>Is state from chrome.storage already loaded? - {isInitialStateResolved.toString()}</div>
             </div>
     );
 };
@@ -155,6 +156,24 @@ const Card = () => {
 
 In the same way you may use it for PopUp.
 
+### Initial Value flow
+
+Say we have the next hook:
+
+```javascript
+const [value, setValue, isPersistent, error, isInitialStateResolved] = useChromeStorageLocal('counterLocal', 1);
+```
+
+Say in the `chrome.storage.local` we already have: `counterLocal: 10`.
+
+Changes of `value`:
+
+1. `value` is 1 (`initialValue` set in the hook)
+2. `useChromeStorageLocal` call to chrome API (this API is async) to get the value of `counterLocal`.
+
+- `value` changes to *10*
+- `isInitialStateResolved` changes to `true` indicating that `value` synchronized with data saved in `chrome.storage`
+
 ## API
 
 ### useChromeStorageLocal(key, initialValue?)
@@ -167,7 +186,7 @@ contexts). If you want to use this hook in more than one place, use `createChrom
 
 #### Returns
 
-`[value, setValue, isPersistent, error]`
+`[value, setValue, isPersistent, error, isInitialStateResolved]`
 
 - `value: any` - stateful value like first one returned from `React.useState()`
 - `setValue: function` - function to update `value` like second one returned from `React.useState()`
@@ -176,6 +195,8 @@ contexts). If you want to use this hook in more than one place, use `createChrom
   will be set to `false`
 - `error: string` - If `isPersistent` is `true` will contain empty string. Otherwise, will contain error returned
   by `chrome.runtime.lastError`.
+- `isInitialStateResolved: boolean` - will set to `true` once `initialValue` will be replaced with stored in
+  chrome.storage
 
 ### useChromeStorageSync(key, initialValue?)
 
@@ -197,6 +218,8 @@ use this hook in more than one place, use `createChromeStorageStateHookSync`.
   will be set to `false`
 - `error: string` - If `isPersistent` is `true` will contain empty string. Otherwise, will contain error returned
   by `chrome.runtime.lastError`.
+- `isInitialStateResolved: boolean` - will set to `true` once `initialValue` will be replaced with stored in
+  chrome.storage
 
 ### createChromeStorageStateHookLocal(key, initialValue?)
 
@@ -209,7 +232,8 @@ in `chrome.storage.local`.
 
 ### Returns
 
-`function(): [any, (value: any) => void, boolean, string]` - `useChromeStorageLocal` hook which may be used across
+`function(): [any, (value: any) => void, boolean, string, boolean]` - `useChromeStorageLocal` hook which may be used
+across
 extension's components/pages
 
 ### createChromeStorageStateHookSync(key, initialValue?)
@@ -224,7 +248,8 @@ persisted in `chrome.storage.sync`.
 
 ### Returns
 
-`function(): [any, (value: any) => void, boolean, string]` - `useChromeStorageSync` hook which may be used across
+`function(): [any, (value: any) => void, boolean, string, boolean]` - `useChromeStorageSync` hook which may be used
+across
 extension's components/pages
 
 ## Thanks to
