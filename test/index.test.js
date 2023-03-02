@@ -62,20 +62,41 @@ describe.each`
     ${useChromeStorageLocal} | ${mockGetLocal} | ${mockSetLocal}
     ${useChromeStorageSync}  | ${mockGetSync}  | ${mockSetSync}
 `('$hook', ({hook, mGet, mSet}) => {
-    it('set initialValue as state', function () {
-        const {result} = renderHook(() => hook(KEY, INITIAL));
+    it('set initialValue as state', async function () {
+        const {result, waitForNextUpdate} = renderHook(() => hook(KEY, INITIAL));
+
+        let isInitialStateResolved = result.current[4];
+        expect(isInitialStateResolved).toBe(false);
+        await waitForNextUpdate();
+        isInitialStateResolved = result.current[4];
+        expect(isInitialStateResolved).toBe(true);
+
         const [settings] = result.current;
         expect(settings).toEqual(INITIAL);
     });
 
-    it('set functional initialValue as state', () => {
-        const {result} = renderHook(() => hook(KEY, () => INITIAL));
+    it('set functional initialValue as state', async () => {
+        const {result, waitForNextUpdate} = renderHook(() => hook(KEY, () => INITIAL));
+
+        let isInitialStateResolved = result.current[4];
+        expect(isInitialStateResolved).toBe(false);
+        await waitForNextUpdate();
+        isInitialStateResolved = result.current[4];
+        expect(isInitialStateResolved).toBe(true);
+
         const [settings] = result.current;
         expect(settings).toEqual(INITIAL);
     });
 
-    it('be persistent and with no error', function () {
-        const {result} = renderHook(() => hook(KEY, INITIAL));
+    it('be persistent and with no error', async function () {
+        const {result, waitForNextUpdate} = renderHook(() => hook(KEY, INITIAL));
+
+        let isInitialStateResolved = result.current[4];
+        expect(isInitialStateResolved).toBe(false);
+        await waitForNextUpdate();
+        isInitialStateResolved = result.current[4];
+        expect(isInitialStateResolved).toBe(true);
+
         const [, , isPersistent, error] = result.current;
         expect(isPersistent).toBeTruthy();
         expect(error).toBe('');
