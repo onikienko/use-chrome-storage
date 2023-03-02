@@ -7,7 +7,7 @@ import {storage} from './storage';
  * @param {string} key
  * @param {*} initialValue
  * @param {'local'|'sync'} storageArea
- * @returns {[*, function(*= any): void, boolean, string]}
+ * @returns {[*, function(*= any): void, boolean, string, boolean]}
  */
 export default function useChromeStorage(key, initialValue, storageArea) {
     const [INITIAL_VALUE] = useState(() => {
@@ -17,6 +17,7 @@ export default function useChromeStorage(key, initialValue, storageArea) {
     const [state, setState] = useState(INITIAL_VALUE);
     const [isPersistent, setIsPersistent] = useState(true);
     const [error, setError] = useState('');
+    const [isInitialStateResolved, setIsInitialStateResolved] = useState(false);
 
     useEffect(() => {
         storage.get(key, INITIAL_VALUE, STORAGE_AREA)
@@ -28,6 +29,9 @@ export default function useChromeStorage(key, initialValue, storageArea) {
             .catch(error => {
                 setIsPersistent(false);
                 setError(error);
+            })
+            .finally(() => {
+                setIsInitialStateResolved(true);
             });
     }, [key, INITIAL_VALUE, STORAGE_AREA]);
 
@@ -60,5 +64,5 @@ export default function useChromeStorage(key, initialValue, storageArea) {
         };
     }, [key, STORAGE_AREA]);
 
-    return [state, updateValue, isPersistent, error];
+    return [state, updateValue, isPersistent, error, isInitialStateResolved];
 }
