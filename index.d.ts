@@ -66,7 +66,7 @@ declare namespace useChromeStorage {
    * @param {*} [initialValue] - default value to use
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
-  function createChromeStorageStateHookLocal<S>(key: string, initialValue: S | (() => S)): [S, Dispatch<SetStateAction<S>>, boolean, string];
+  function createChromeStorageStateHookLocal<S>(key: string, initialValue: S | (() => S)): () => [S, Dispatch<SetStateAction<S>>, boolean, string];
   // convenience overload when initialValue is omitted
   /**
    * Use to create state with chrome.storage.local.
@@ -76,7 +76,7 @@ declare namespace useChromeStorage {
    * @param {*} [initialValue] - default value to use
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
-  function createChromeStorageStateHookLocal<S = undefined>(key: string): [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
+  function createChromeStorageStateHookLocal<S = undefined>(key: string): () => [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
 
 
   /**
@@ -87,7 +87,7 @@ declare namespace useChromeStorage {
    * @param {*} [initialValue] - default value to use
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
-  function createChromeStorageStateHookSync<S>(key: string, initialValue: S | (() => S)): [S, Dispatch<SetStateAction<S>>, boolean, string];
+  function createChromeStorageStateHookSync<S>(key: string, initialValue: S | (() => S)): () => [S, Dispatch<SetStateAction<S>>, boolean, string];
   // convenience overload when initialValue is omitted
   /**
    * Use to create state with chrome.storage.sync.
@@ -97,5 +97,5 @@ declare namespace useChromeStorage {
    * @param {*} [initialValue] - default value to use
    * @returns {function(): [any, (value: any) => void, boolean, string]}
    */
-  function createChromeStorageStateHookSync<S = undefined>(key: string): [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
+  function createChromeStorageStateHookSync<S = undefined>(key: string): () => [S | undefined, Dispatch<SetStateAction<S | undefined>>, boolean, string];
 }
