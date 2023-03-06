@@ -1,3 +1,10 @@
+# 1.1.0
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.1.0
+
+- feat: return `isInitialStateResolved` from hooks. It will be `true` once `initialValue` resolved from chrome.storage
+- upgrade dependencies
+
 # 1.0.12
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.0.12
