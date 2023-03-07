@@ -26,10 +26,10 @@ This package requires the storage permission in manifest.json:
 
 ```json
 {
-	"name": "My Extension",
-	"permissions": [
-		"storage"
-	]
+    "name": "My Extension",
+    "permissions": [
+        "storage"
+    ]
 }
 ```
 
@@ -45,6 +45,7 @@ import {useChromeStorageLocal} from 'use-chrome-storage';
 
 const LocalCounter = () => {
     // if you need to state be preserved in `chrome.storage.sync` use useChromeStorageSync
+    // for `chrome.storage.session` use useChromeStorageSession
     const [value, setValue, isPersistent, error, isInitialStateResolved] = useChromeStorageLocal('counterLocal', 0);
     return (
             <div>
@@ -66,9 +67,11 @@ const LocalCounter = () => {
 
 ### Usage of createChromeStorageStateHook
 
-If you want to use same `key` in different components in different extension parts in React context (like in PopUp, content scripts,
-) you need to use `createChromeStorageStateHookLocal`(for chrome.storage.**local**)
-or `createChromeStorageStateHookSync` (for chrome.storage.**sync**)
+If you want to use same `key` in different components in different extension parts in React context (like in PopUp,
+content scripts,
+) you need to use `createChromeStorageStateHookLocal`(for chrome.storage.**local**),
+`createChromeStorageStateHookSync` (for chrome.storage.**sync**)
+and `createChromeStorageStateHookSession` (for chrome.storage.**session**).
 
 Initialize storage:
 
@@ -174,6 +177,14 @@ Changes of `value`:
 - `value` changes to *10*
 - `isInitialStateResolved` changes to `true` indicating that `value` synchronized with data saved in `chrome.storage`
 
+### Usage with `chrome.storage.session`
+
+`useChromeStorageSession` and `createChromeStorageStateHookSessin` use `chrome.storage.session` to persist state.
+By default, it's not exposed to content scripts,
+but this behavior can be changed by calling `chrome.storage.session.setAccessLevel('TRUSTED_AND_UNTRUSTED_CONTEXTS')`
+(call it from background script).
+https://developer.chrome.com/docs/extensions/reference/storage/#method-StorageArea-setAccessLevel
+
 ## API
 
 ### useChromeStorageLocal(key, initialValue?)
@@ -221,6 +232,29 @@ use this hook in more than one place, use `createChromeStorageStateHookSync`.
 - `isInitialStateResolved: boolean` - will set to `true` once `initialValue` will be replaced with stored in
   chrome.storage
 
+### useChromeStorageSession(key, initialValue?)
+
+Similar to `useChromeStorageLocal` but will use `chrome.storage.session`. State will be persisted
+in `chrome.storage.session` (and updated from `chrome.storage.session` if it was updated in other contexts). If you want
+to use this hook in more than one place, use `createChromeStorageStateHookSession`.
+
+- `key: string` - The key used in `chrome.storage.session`
+- `initialValue: any = undefined` - value which will be used if `chrome.storage.session` has no stored value yet
+
+#### Returns
+
+`[value, setValue, isPersistent, error]`
+
+- `value: any` - stateful value like first one returned from `React.useState()`
+- `setValue: function` - function to update `value` like second one returned from `React.useState()`
+- `isPersistent: boolean` - Will be `true` if data is persisted in `chrome.storage.session`. In case of error
+  during `chrome.storage.session.get` or `chrome.storage.session.set` value will be stored in memory only
+  and `isPersistent` will be set to `false`
+- `error: string` - If `isPersistent` is `true` will contain empty string. Otherwise, will contain error returned
+  by `chrome.runtime.lastError`.
+- `isInitialStateResolved: boolean` - will set to `true` once `initialValue` will be replaced with stored in
+  `chrome.storage.session`
+
 ### createChromeStorageStateHookLocal(key, initialValue?)
 
 In case you want to use same `key` in different components/extension contextsInstead you may create state hook which may
@@ -249,8 +283,22 @@ persisted in `chrome.storage.sync`.
 ### Returns
 
 `function(): [any, (value: any) => void, boolean, string, boolean]` - `useChromeStorageSync` hook which may be used
-across
-extension's components/pages
+across extension's components/pages
+
+### createChromeStorageStateHookSession(key, initialValue?)
+
+Similar to `createChromeStorageStateHookLocal` but uses `chrome.storage.session`. In case you want to use same `key` in
+different components/extension contextsInstead you may create state hook which may be used across extension.
+See [example](#usage-of-createchromestoragestateHook) and replace with `createChromeStorageStateHookSession`. State will
+be persisted in `chrome.storage.session`.
+
+- `key: string` - The key used in `chrome.storage.session`
+- `initialValue: any = undefined` - value which will be used if `chrome.storage.session` has no stored value yet
+
+### Returns
+
+`function(): [any, (value: any) => void, boolean, string, boolean]` - `useChromeStorageSession` hook which may be used
+across extension's components/pages
 
 ## Thanks to
 
