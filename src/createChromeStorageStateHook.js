@@ -9,7 +9,7 @@ export default function createChromeStorageStateHook(key, initialValue, storageA
         const [value, setValue, isPersistent, error, isInitialStateResolved] = useChromeStorage(
             key,
             initialValue,
-            storageArea
+            storageArea,
         );
 
         const setValueAll = useCallback((newValue) => {

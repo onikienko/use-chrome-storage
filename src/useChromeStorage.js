@@ -6,7 +6,7 @@ import {storage} from './storage';
  * Basic hook for storage
  * @param {string} key
  * @param {*} initialValue
- * @param {'local'|'sync'} storageArea
+ * @param {'local'|'sync'|'session'} storageArea
  * @returns {[*, function(*= any): void, boolean, string, boolean]}
  */
 export default function useChromeStorage(key, initialValue, storageArea) {
