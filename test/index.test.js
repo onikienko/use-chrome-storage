@@ -3,11 +3,19 @@ import {act, renderHook} from '@testing-library/react-hooks';
 import {chrome} from 'jest-chrome';
 import {
     createChromeStorageStateHookLocal,
+    createChromeStorageStateHookSession,
     createChromeStorageStateHookSync,
     useChromeStorageLocal,
+    useChromeStorageSession,
     useChromeStorageSync,
 } from '../src';
 
+// jest-chrome does not have chrome.storage.session yet - https://github.com/extend-chrome/jest-chrome/issues/22
+// mocking required methods
+chrome.storage.session = {
+    get: jest.fn(),
+    set: jest.fn(),
+};
 
 const KEY = 'settings';
 const INITIAL = {opt1: true, opt2: false};
@@ -21,6 +29,9 @@ const mockSetLocal = chrome.storage.local.set;
 
 const mockGetSync = chrome.storage.sync.get;
 const mockSetSync = chrome.storage.sync.set;
+
+const mockGetSession = chrome.storage.session.get;
+const mockSetSession = chrome.storage.session.set;
 
 const mockGet = (objToGet, callback) => {
     const key = Object.keys(objToGet)[0];
@@ -48,6 +59,8 @@ mockGetLocal.mockImplementation(mockGet);
 mockSetLocal.mockImplementation((objToSet, callback) => mockSet(objToSet, callback, 'local'));
 mockGetSync.mockImplementation(mockGet);
 mockSetSync.mockImplementation((objToSet, callback) => mockSet(objToSet, callback, 'sync'));
+mockGetSession.mockImplementation(mockGet);
+mockSetSession.mockImplementation((objToSet, callback) => mockSet(objToSet, callback, 'session'));
 
 beforeEach(() => {
     store = {};
@@ -55,12 +68,15 @@ beforeEach(() => {
     mockSetLocal.mockClear();
     mockGetSync.mockClear();
     mockSetSync.mockClear();
+    mockGetSession.mockClear();
+    mockGetSession.mockClear();
 });
 
 describe.each`
     hook                     | mGet            | mSet
     ${useChromeStorageLocal} | ${mockGetLocal} | ${mockSetLocal}
     ${useChromeStorageSync}  | ${mockGetSync}  | ${mockSetSync}
+    ${useChromeStorageSession}  | ${mockGetSession}  | ${mockSetSession}
 `('$hook', ({hook, mGet, mSet}) => {
     it('set initialValue as state', async function () {
         const {result, waitForNextUpdate} = renderHook(() => hook(KEY, INITIAL));
@@ -161,14 +177,15 @@ describe.each`
     createHook
     ${createChromeStorageStateHookLocal}
     ${createChromeStorageStateHookSync}
+    ${createChromeStorageStateHookSession}
 `('$createHook', ({createHook}) => {
     it('one hook update the other', async function () {
         const useSettings = createHook(KEY, INITIAL);
-        const { result: resultA, waitForNextUpdate } = renderHook(() => useSettings());
+        const {result: resultA, waitForNextUpdate} = renderHook(() => useSettings());
         await waitForNextUpdate();
         expect(resultA.current[4]).toBe(true);
 
-        const { result: resultB } = renderHook(() => useSettings());
+        const {result: resultB} = renderHook(() => useSettings());
         act(() => {
             const setSettings = resultA.current[1];
             setSettings(UPDATED);
@@ -178,7 +195,7 @@ describe.each`
         await waitFor(() => {
             expect(settings).toEqual(UPDATED);
             expect(isPersistent).toBe(true);
-            expect(error).toBe("");
+            expect(error).toBe('');
         });
     });
 });
