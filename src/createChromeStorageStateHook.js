@@ -6,9 +6,13 @@ export default function createChromeStorageStateHook(key, initialValue, storageA
     const consumers = [];
 
     return function useCreateChromeStorageHook() {
-        const [value, setValue, isPersistent, error] = useChromeStorage(key, initialValue, storageArea);
+        const [value, setValue, isPersistent, error, isInitialStateResolved] = useChromeStorage(
+            key,
+            initialValue,
+            storageArea
+        );
 
-        const setValueAll = useCallback(newValue => {
+        const setValueAll = useCallback((newValue) => {
             for (const consumer of consumers) {
                 consumer(newValue);
             }
@@ -21,6 +25,7 @@ export default function createChromeStorageStateHook(key, initialValue, storageA
             };
         }, [setValue]);
 
-        return [value, setValueAll, isPersistent, error];
+        return [value, setValueAll, isPersistent, error, isInitialStateResolved];
     };
 }
+
