@@ -1,3 +1,9 @@
+# 1.1.1
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.1.1
+
+-fix: return `isInitialStateResolved` from hooks creators (@spencerc99)
+
 # 1.1.0
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.1.0
