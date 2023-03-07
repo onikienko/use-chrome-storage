@@ -1,5 +1,5 @@
-import useChromeStorage from './useChromeStorage';
 import createChromeStorageStateHook from './createChromeStorageStateHook';
+import useChromeStorage from './useChromeStorage';
 
 
 /**
@@ -12,6 +12,7 @@ import createChromeStorageStateHook from './createChromeStorageStateHook';
  *      function to update this `value`,
  *      `isPersistent` - will be `false` if error occurred during reading/writing chrome.storage,
  *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
+ *      `isInitialStateResolved` - will set to `true` once `initialValue` will be replaced with stored in chrome.storage
  */
 function useChromeStorageLocal(key, initialValue) {
     return useChromeStorage(key, initialValue, 'local');
@@ -22,11 +23,12 @@ function useChromeStorageLocal(key, initialValue) {
  *
  * @param {string} key - they key name in chrome's storage. Nested keys not supported
  * @param {*} [initialValue] - default value to use
- * @returns {[any, (value: any) => void, boolean, string]} - array of
+ * @returns {[any, (value: any) => void, boolean, string, boolean]} - array of
  *      stateful `value`,
  *      function to update this `value`,
  *      `isPersistent` - will be `false` if error occurred during reading/writing chrome.storage,
  *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
+ *      `isInitialStateResolved` - will set to `true` once `initialValue` will be replaced with stored in chrome.storage
  */
 function useChromeStorageSync(key, initialValue) {
     return useChromeStorage(key, initialValue, 'sync');
@@ -38,7 +40,8 @@ function useChromeStorageSync(key, initialValue) {
  *
  * @param {string} key - they key name in chrome's storage. Nested keys not supported
  * @param {*} [initialValue] - default value to use
- * @returns {function(): [any, (value: any) => void, boolean, string]}
+ * @returns {function(): [any, (value: any) => void, boolean, string, boolean]}
+ *          - useChromeStorageSync hook which may be used across extension's components/pages
  */
 function createChromeStorageStateHookLocal(key, initialValue) {
     return createChromeStorageStateHook(key, initialValue, 'local');
@@ -50,7 +53,8 @@ function createChromeStorageStateHookLocal(key, initialValue) {
  *
  * @param {string} key - they key name in chrome's storage. Nested keys not supported
  * @param {*} [initialValue] - default value to use
- * @returns {function(): [any, (value: any) => void, boolean, string]}
+ * @returns {function(): [any, (value: any) => void, boolean, string, boolean]}
+ *          - useChromeStorageSync hook which may be used across extension's components/pages
  */
 function createChromeStorageStateHookSync(key, initialValue) {
     return createChromeStorageStateHook(key, initialValue, 'sync');
