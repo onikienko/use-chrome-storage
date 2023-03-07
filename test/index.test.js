@@ -164,17 +164,21 @@ describe.each`
 `('$createHook', ({createHook}) => {
     it('one hook update the other', async function () {
         const useSettings = createHook(KEY, INITIAL);
-        const {result: resultA} = renderHook(() => useSettings());
-        const {result: resultB} = renderHook(() => useSettings());
+        const { result: resultA, waitForNextUpdate } = renderHook(() => useSettings());
+        await waitForNextUpdate();
+        expect(resultA.current[4]).toBe(true);
 
+        const { result: resultB } = renderHook(() => useSettings());
         act(() => {
             const setSettings = resultA.current[1];
             setSettings(UPDATED);
         });
 
-        const [settings] = resultB.current;
+        const [settings, , isPersistent, error] = resultB.current;
         await waitFor(() => {
             expect(settings).toEqual(UPDATED);
+            expect(isPersistent).toBe(true);
+            expect(error).toBe("");
         });
     });
 });
