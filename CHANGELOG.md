@@ -1,3 +1,9 @@
+# 1.2.0
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.2.0
+
+-feat: add `chrome.storage.session` support (`useChromeStorageSession` and `createChromeStorageStateHookSession`)
+
 # 1.1.1
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.1.1
