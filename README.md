@@ -98,7 +98,7 @@ import {useSettingsStore} from './common/useSettingsStore';
 
 
 const Options = () => {
-    const [settings, setSettings, isPersistent, error] = useSettingsStore();
+    const [settings, setSettings, isPersistent, error, isInitialStateResolved] = useSettingsStore();
 
     const handleChange = event => {
         setSettings(prevState => {
@@ -129,6 +129,7 @@ const Options = () => {
                     />
                     <span>Show History</span>
                 </label>
+                {isInitialStateResolved && <div>Initial state from "chrome.storage" is loaded</div>}
                 {!isPersistent && <div>Error writing to the chrome.storage: {error}</div>}
             </div>
     );
