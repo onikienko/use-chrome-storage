@@ -11,7 +11,7 @@ import useChromeStorage from './useChromeStorage';
  *      stateful `value`,
  *      function to update this `value`,
  *      `isPersistent` - will be `false` if error occurred during reading/writing chrome.storage,
- *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
+ *      `error` - will contain error appeared in storage. if isPersistent is true, there will be an empty string
  *      `isInitialStateResolved` - will set to `true` once `initialValue` will be replaced with stored in chrome.storage
  */
 function useChromeStorageLocal(key, initialValue) {
@@ -27,7 +27,7 @@ function useChromeStorageLocal(key, initialValue) {
  *      stateful `value`,
  *      function to update this `value`,
  *      `isPersistent` - will be `false` if error occurred during reading/writing chrome.storage,
- *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
+ *      `error` - will contain error appeared in storage. if isPersistent is true, there will be an empty string
  *      `isInitialStateResolved` - will set to `true` once `initialValue` will be replaced with stored in chrome.storage
  */
 function useChromeStorageSync(key, initialValue) {
@@ -46,7 +46,7 @@ function useChromeStorageSync(key, initialValue) {
  *      stateful `value`,
  *      function to update this `value`,
  *      `isPersistent` - will be `false` if error occurred during reading/writing chrome.storage,
- *      `error` - will contain error appeared in storage. if isPersistent is true will be empty string
+ *      `error` - will contain error appeared in storage. if isPersistent is true, there will be an empty string
  *      `isInitialStateResolved` - will set to `true` once `initialValue` will be replaced with stored in chrome.storage
  */
 function useChromeStorageSession(key, initialValue) {
@@ -57,7 +57,7 @@ function useChromeStorageSession(key, initialValue) {
  * Use to create state with chrome.storage.local.
  * Useful if you want to reuse same state across components and/or context (like in popup, content script, background pages)
  *
- * @param {string} key - they key name in chrome's storage. Nested keys not supported
+ * @param {string} key - they key name in chrome's storage. Nested keys are not supported
  * @param {*} [initialValue] - default value to use
  * @returns {function(): [any, (value: any) => void, boolean, string, boolean]}
  *          - useChromeStorageLocal hook which may be used across extension's components/pages
@@ -70,7 +70,7 @@ function createChromeStorageStateHookLocal(key, initialValue) {
  * Use to create state with chrome.storage.sync.
  * Useful if you want to reuse same state across components and/or context (like in popup, content script, background pages)
  *
- * @param {string} key - they key name in chrome's storage. Nested keys not supported
+ * @param {string} key - they key name in chrome's storage. Nested keys are not supported
  * @param {*} [initialValue] - default value to use
  * @returns {function(): [any, (value: any) => void, boolean, string, boolean]}
  *          - useChromeStorageSync hook which may be used across extension's components/pages
@@ -86,7 +86,7 @@ function createChromeStorageStateHookSync(key, initialValue) {
  * but this behavior can be changed by setting chrome.storage.session.setAccessLevel() in the background script.
  * https://developer.chrome.com/docs/extensions/reference/storage/#method-StorageArea-setAccessLevel
  *
- * @param {string} key - they key name in chrome's storage. Nested keys not supported
+ * @param {string} key - they key name in chrome's storage. Nested keys are not supported
  * @param {*} [initialValue] - default value to use
  * @returns {function(): [any, (value: any) => void, boolean, string, boolean]}
  *          - useChromeStorageSession hook which may be used across extension's components/pages
