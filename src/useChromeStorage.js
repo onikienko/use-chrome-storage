@@ -2,6 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {storage} from './storage';
 
 
+const chrome = window.chrome
 /**
  * Basic hook for storage
  * @param {string} key
