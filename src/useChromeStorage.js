@@ -58,9 +58,9 @@ export default function useChromeStorage(key, initialValue, storageArea) {
                 setError('');
             }
         };
-        chrome.storage.onChanged.addListener(onChange);
+        chrome?.storage?.onChanged?.addListener(onChange);
         return () => {
-            chrome.storage.onChanged.removeListener(onChange);
+            chrome?.storage?.onChanged?.removeListener(onChange);
         };
     }, [key, STORAGE_AREA]);
 
