@@ -10,7 +10,7 @@ Custom React hooks for `chrome.storage.` You may use it for keeping global persi
 So it's impossible to use this package in the background service worker.
 
 - Simplify work with `chrome.storage`
-- Supports `chrome.storage.local` and `chrome.storage.sync`
+- Supports `chrome.storage.local`, `chrome.storage.sync`, and `chrome.storage.session`
 - May be used as persisted state available in different extension's contexts (content script, popup, options page)
 - Listen for `chrome.storage` changes and keep local state updated
 
