@@ -1,6 +1,6 @@
 # use-chrome-storage
 
-### Russian invaders must die. Glory to Ukraine. Тримайтеся, брати!
+### Russian invaders must die. Glory to Ukraine. Тримаймося, браття 🇺🇦
 
 ☝️ This package is for usage in Chrome Extensions. Should work with Firefox extensions but not tested.
 
