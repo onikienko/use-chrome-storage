@@ -92,7 +92,7 @@ function createChromeStorageStateHookSync(key, initialValue) {
  *          - useChromeStorageSession hook which may be used across extension's components/pages
  */
 function createChromeStorageStateHookSession(key, initialValue) {
-    return createChromeStorageStateHook(key, initialValue, 'sync');
+    return createChromeStorageStateHook(key, initialValue, 'session');
 }
 
 export {
