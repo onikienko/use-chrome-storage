@@ -1,3 +1,10 @@
+# 1.2.2
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.2.2
+
+- fix: createChromeStorageStateHookSession actually stored in 'sync'
+- bump dependencies
+
 # 1.2.1
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.2.1
