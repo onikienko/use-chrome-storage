@@ -53,8 +53,15 @@ export default function useChromeStorage(key, initialValue, storageArea) {
     useEffect(() => {
         const onChange = (changes, areaName) => {
             if (areaName === STORAGE_AREA && key in changes) {
-                setState(changes[key].newValue);
-                setIsPersistent(true);
+                const change = changes[key]; 
+                const isValueStored = 'newValue' in change;
+                // only set the new value if it's actually stored (otherwise it'll just set undefined)
+                if (isValueStored) {
+                    setState(change.newValue);
+                } else {
+                    setState(INITIAL_VALUE);
+                }
+                setIsPersistent(isValueStored);
                 setError('');
             }
         };

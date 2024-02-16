@@ -186,6 +186,15 @@ but this behavior can be changed by calling `chrome.storage.session.setAccessLev
 (call it from background script).
 https://developer.chrome.com/docs/extensions/reference/storage/#method-StorageArea-setAccessLevel
 
+### Clearing or removing storage items
+
+Suppose you want to reset all your stored items back to their initial values. 
+
+You could, for example, use `chrome.storage.local.clear()` (or their 'session', 'sync' counterparts) to clear the entire storage.  
+Alternatively, you can use `chrome.storage.local.remove(key)` to remove a specific storage item.
+
+This will trigger a sync event in your `useChromeStorage[Local|Session|Sync]` hooks, setting them back to their _initial value_.
+
 ## API
 
 ### useChromeStorageLocal(key, initialValue?)
@@ -194,7 +203,7 @@ State will be persisted in `chrome.storage.local` (and updated from `chrome.stor
 contexts). If you want to use this hook in more than one place, use `createChromeStorageStateHookLocal`.
 
 - `key: string` - The key used in `chrome.storage.local`
-- `initialValue: any = undefined` - value which will be used if `chrome.storage.local` has no stored value yet
+- `initialValue: any = undefined` - value which will be used if `chrome.storage.local` has no stored value yet or when a stored item is removed (unset)
 
 #### Returns
 
