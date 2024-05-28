@@ -2,8 +2,8 @@
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.3.1
 
-deps: bump peer deps for React 19
-deps: update dependencies
+- deps: bump peer deps for React 19
+- deps: update dependencies
 
 # 1.3.0
 
