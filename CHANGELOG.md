@@ -1,3 +1,10 @@
+# 1.3.2
+
+https://github.com/onikienko/use-chrome-storage/releases/tag/v1.3.2
+
+- docs: update README.md
+- build(deps): upgrade dev dependencies
+
 # 1.3.1
 
 https://github.com/onikienko/use-chrome-storage/releases/tag/v1.3.1
